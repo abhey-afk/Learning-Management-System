@@ -1,0 +1,17 @@
+{
+  "name": "lms-deployment",
+  "version": "1.0.0",
+  "description": "Learning Management System Deployment",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "postinstall": "cd server && npm install"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {
+    "compression": "^1.7.4",
+    "express": "^4.18.2"
+  }
+} 
