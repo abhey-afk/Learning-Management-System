@@ -12,9 +12,24 @@ import { stripeWebhook } from "./controllers/coursePurchase.controller.js";
 import courseProgressRoute from "./routes/courseProgress.route.js";
 import healthRoute from "./routes/health.route.js";
 
-connectDB();
-const app = express();
+// Validate required environment variables
+const requiredEnvVars = ['MONGO_URI', 'JWT_SECRET', 'CLIENT_URL'];
+const missingEnvVars = requiredEnvVars.filter(envVar => !process.env[envVar]);
 
+if (missingEnvVars.length > 0) {
+    console.error('Error: Missing required environment variables:');
+    missingEnvVars.forEach(envVar => console.error(`- ${envVar}`));
+    console.error('Please set these variables in your Render dashboard.');
+    process.exit(1);
+}
+
+console.log('Environment variables validated successfully');
+console.log('Connecting to MongoDB...');
+
+// Connect to MongoDB
+connectDB();
+
+const app = express();
 const PORT = process.env.PORT || 8080;
 
 // Configure CORS with multiple allowed origins
