@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 export const generateToken = (res, user, message) => {
   try {
     if (!process.env.SECRET_KEY) {
-      throw new Error('JWT_SECRET is not defined in environment variables');
+      throw new Error('SECRET_KEY is not defined in environment variables');
     }
 
     console.log("Generating token for user:", user._id);

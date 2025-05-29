@@ -13,7 +13,7 @@ import courseProgressRoute from "./routes/courseProgress.route.js";
 import healthRoute from "./routes/health.route.js";
 
 // Validate required environment variables
-const requiredEnvVars = ['MONGO_URI', 'JWT_SECRET', 'CLIENT_URL'];
+const requiredEnvVars = ['MONGO_URI', 'SECRET_KEY', 'CLIENT_URL'];
 const missingEnvVars = requiredEnvVars.filter(envVar => !process.env[envVar]);
 
 if (missingEnvVars.length > 0) {
