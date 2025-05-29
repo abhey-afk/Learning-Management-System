@@ -115,7 +115,7 @@ export default function Navbar() {
             </button>
           )}
           <Link to="/" className="font-bold text-xl text-blue-600 ml-2">
-            TrainTool
+            E Learning
           </Link>
         </div>
 
