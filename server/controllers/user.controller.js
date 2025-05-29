@@ -67,38 +67,57 @@ export const register = async (req,res) => {
 }
 export const login = async (req,res) => {
     try {
+        console.log("Login attempt received:", { username: req.body.username });
+        
         const {username, password} = req.body;
         if(!username || !password){
+            console.log("Login failed: Missing fields");
             return res.status(400).json({
-                success:false,
-                message:"All fields are required."
-            })
+                success: false,
+                message: "All fields are required."
+            });
         }
+
         // Try to find user by either username or email
+        console.log("Searching for user...");
         const user = await User.findOne({
             $or: [{ username }, { email: username }]
         });
+
         if(!user){
+            console.log("Login failed: User not found");
             return res.status(400).json({
-                success:false,
-                message:"Incorrect username or password"
-            })
-        }
-        const isPasswordMatch = await bcrypt.compare(password, user.password);
-        if(!isPasswordMatch){
-            return res.status(400).json({
-                success:false,
-                message:"Incorrect username or password"
+                success: false,
+                message: "Incorrect username or password"
             });
         }
+
+        console.log("User found, verifying password...");
+        const isPasswordMatch = await bcrypt.compare(password, user.password);
+        
+        if(!isPasswordMatch){
+            console.log("Login failed: Password mismatch");
+            return res.status(400).json({
+                success: false,
+                message: "Incorrect username or password"
+            });
+        }
+
+        console.log("Password verified, generating token...");
         return generateToken(res, user, `Welcome back ${user.firstName}`);
 
     } catch (error) {
-        console.error("Login error:", error);
+        console.error("Login error details:", {
+            message: error.message,
+            stack: error.stack,
+            name: error.name
+        });
+        
         return res.status(500).json({
-            success:false,
-            message:"Failed to login"
-        })
+            success: false,
+            message: "Failed to login",
+            error: process.env.NODE_ENV === 'development' ? error.message : undefined
+        });
     }
 }
 export const logout = async (_,res) => {
