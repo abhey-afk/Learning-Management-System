@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate, createBrowserRouter, RouterProvider } from "react-router-dom";
 import HeroSection from "./pages/student/HeroSection";
-import MainLayout from "./layout/Mainlayout";
+import MainLayout from "./layout/MainLayout";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Course from "./pages/student/Course";
