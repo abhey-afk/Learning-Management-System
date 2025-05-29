@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 8080;
 
 // Configure CORS first
 app.use(cors({
-    origin: true, // Allow any origin
+    origin: process.env.CLIENT_URL || true, // Use CLIENT_URL in production, allow any in development
     credentials: true
 }));
 
