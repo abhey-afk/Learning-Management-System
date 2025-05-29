@@ -2,7 +2,7 @@ import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import { userLoggedIn, userLoggedOut } from "../authSlice";
 import Cookies from "js-cookie";
 
-const USER_API = "https://lms-backend-jrz9.onrender.com/api/v1/user/"
+const USER_API = "https://lms-backend-jrz9.onrender.com/api/v1/user/";
 
 export const authApi = createApi({
     reducerPath:"authApi",
@@ -10,8 +10,8 @@ export const authApi = createApi({
         baseUrl:USER_API,
         credentials:'include',
         prepareHeaders: (headers) => {
-            // Get the token from localStorage
-            const token = localStorage.getItem('authToken');
+            // Get the token from both cookie and localStorage
+            const token = Cookies.get('authToken') || localStorage.getItem('authToken');
             
             if (token) {
                 headers.set('authorization', `Bearer ${token}`);

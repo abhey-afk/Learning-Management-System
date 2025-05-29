@@ -7,34 +7,62 @@ export const register = async (req,res) => {
     try {
         const {username, firstName, lastName, email, phoneCode, 
           phoneNumber, role, country, state, city, gender, password} = req.body; 
-        if(!username || !firstName || !lastName || !email || !phoneCode || !phoneNumber || !role || !country || !state || !city || !gender || !password){
+
+        console.log("Registration attempt for:", { email, username });
+
+        // Validate required fields
+        const requiredFields = {username, firstName, lastName, email, phoneCode, 
+            phoneNumber, role, country, state, city, gender, password};
+        
+        const missingFields = Object.entries(requiredFields)
+            .filter(([_, value]) => !value)
+            .map(([key]) => key);
+
+        if (missingFields.length > 0) {
+            console.log("Missing fields:", missingFields);
             return res.status(400).json({
-                success:false,
-                message:"All fields are required."
-            })
+                success: false,
+                message: "Missing required fields",
+                missingFields
+            });
         }
-        const user = await User.findOne({email});
-        if(user){
-            return res.status(400).json({
-                success:false,
-                message:"User already exist with this email."
-            })
-        }
-        const hashedPassword = await bcrypt.hash(password, 10);
-        await User.create({
-          username, firstName, lastName, email, phoneCode, 
-          phoneNumber, role, country, state, city, gender, password:hashedPassword 
+
+        // Check if user exists
+        const existingUser = await User.findOne({
+            $or: [{ email }, { username }]
         });
+
+        if (existingUser) {
+            const field = existingUser.email === email ? 'email' : 'username';
+            return res.status(400).json({
+                success: false,
+                message: `User already exists with this ${field}`
+            });
+        }
+
+        // Hash password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Create user
+        const newUser = await User.create({
+            username, firstName, lastName, email, phoneCode, 
+            phoneNumber, role, country, state, city, gender,
+            password: hashedPassword 
+        });
+
+        console.log("User created successfully:", newUser._id);
+
         return res.status(201).json({
-            success:true,
-            message:"Account created successfully."
-        })
+            success: true,
+            message: "Account created successfully."
+        });
     } catch (error) {
-        console.log(error);
+        console.error("Registration error:", error);
         return res.status(500).json({
-            success:false,
-            message:"Failed to register"
-        })
+            success: false,
+            message: "Failed to register",
+            error: error.message
+        });
     }
 }
 export const login = async (req,res) => {
