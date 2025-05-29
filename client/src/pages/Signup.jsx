@@ -48,7 +48,7 @@ const Signup = () => {
         phoneCode: '+91',
       };
       
-      const response = await axios.post('http://localhost:8080/api/v1/user/register', formData);
+      const response = await axios.post('https://lms-backend-jrz9.onrender.com/api/v1/user/register', formData);
       
       // If login is automatic after registration (depends on your backend)
       if (response.data.token) {
