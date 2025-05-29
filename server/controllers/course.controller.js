@@ -92,25 +92,42 @@ export const searchCourse = async (req,res) => {
 }
 
 export const getPublishedCourse = async (_,res) => {
-    try {
-        const courses = await Course.find({isPublished: true})
-            .populate({
-                path: "creator",
-                select: "firstName lastName photoUrl"
-            })
-            .lean();
+    let retries = 3;
+    while (retries > 0) {
+        try {
+            console.log(`Attempting to fetch published courses. Retries left: ${retries}`);
+            
+            const courses = await Course.find({isPublished: true})
+                .populate({
+                    path: "creator",
+                    select: "firstName lastName photoUrl"
+                })
+                .lean()
+                .maxTimeMS(15000); // Set maximum execution time to 15 seconds
 
-        return res.status(200).json({
-            success: true,
-            courses: courses || []
-        });
-    } catch (error) {
-        console.error("Error fetching published courses:", error);
-        return res.status(500).json({
-            success: false,
-            message: "Failed to get published courses",
-            error: error.message
-        });
+            console.log(`Successfully fetched ${courses.length} published courses`);
+            
+            return res.status(200).json({
+                success: true,
+                courses: courses || []
+            });
+        } catch (error) {
+            console.error(`Error fetching published courses (${retries} retries left):`, error);
+            if (error.name === 'MongooseError' || error.name === 'MongoError') {
+                retries--;
+                if (retries > 0) {
+                    console.log('Retrying after MongoDB error...');
+                    await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds before retrying
+                    continue;
+                }
+            }
+            
+            return res.status(500).json({
+                success: false,
+                message: "Failed to get published courses",
+                error: error.message
+            });
+        }
     }
 }
 export const getCreatorCourses = async (req,res) => {
