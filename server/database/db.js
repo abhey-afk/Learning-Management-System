@@ -10,12 +10,10 @@ const connectDB = async () => {
         console.log('Attempting to connect to MongoDB...');
         
         const conn = await mongoose.connect(process.env.MONGO_URI, {
-            maxPoolSize: 50,
-            wtimeout: 2500,
-            maxTimeMS: 20000,
-            socketTimeoutMS: 30000,
-            connectTimeoutMS: 30000,
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
             serverSelectionTimeoutMS: 30000,
+            socketTimeoutMS: 30000,
         });
         
         // Add connection error handler
