@@ -6,7 +6,7 @@ export const generateToken = (res, user, message) => {
   });
 
   // Set cookie with safe cross-domain settings
-  res.cookie("token", token, {
+  res.cookie("authToken", token, {
     httpOnly: true,
     secure: true, // Ensure cookie is sent over HTTPS only
     sameSite: "none", // Allow cross-site cookie

@@ -91,10 +91,10 @@ export const login = async (req,res) => {
                 message:"Incorrect username or password"
             });
         }
-        generateToken(res, user, `Welcome back ${user.firstName}`);
+        return generateToken(res, user, `Welcome back ${user.firstName}`);
 
     } catch (error) {
-        console.log(error);
+        console.error("Login error:", error);
         return res.status(500).json({
             success:false,
             message:"Failed to login"
