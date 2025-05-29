@@ -145,14 +145,14 @@ export default function Profile() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-10 px-4 md:px-10">
-      <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-md">
-        <div className="bg-blue-600 p-6 flex items-center gap-6 text-white relative">
+    <div className="min-h-screen bg-gray-50 py-6 sm:py-10 px-4 md:px-10">
+      <div className="max-w-4xl mx-auto bg-white rounded-xl sm:rounded-2xl shadow-md">
+        <div className="bg-blue-600 p-4 sm:p-6 flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 text-white relative">
           <div className="relative">
             <img
               src={previewImage}
               alt="Profile"
-              className="w-24 h-24 rounded-full border-4 border-white shadow object-cover"
+              className="w-20 h-20 sm:w-24 sm:h-24 rounded-full border-4 border-white shadow object-cover"
             />
             {editMode && (
               <label className="absolute bottom-0 right-0 bg-white p-1 rounded-full shadow cursor-pointer">
@@ -166,9 +166,9 @@ export default function Profile() {
               </label>
             )}
           </div>
-          <div>
-            <h2 className="text-2xl font-bold capitalize">{student.firstName} {student.lastName}</h2>
-            <p className="flex items-center text-sm mt-1">
+          <div className="text-center sm:text-left">
+            <h2 className="text-xl sm:text-2xl font-bold capitalize">{student.firstName} {student.lastName}</h2>
+            <p className="flex items-center justify-center sm:justify-start text-sm mt-1">
               <Calendar size={16} className="mr-1" />
               Joined {student.createdAt?.slice(0, 10) || "N/A"}
             </p>
@@ -176,20 +176,20 @@ export default function Profile() {
         </div>
 
         {successMessage && (
-          <div className="bg-green-600 text-white text-center py-2">
+          <div className="bg-green-600 text-white text-center py-2 text-sm sm:text-base">
             {successMessage}
           </div>
         )}
         
         {errorMessage && (
-          <div className="bg-red-600 text-white text-center py-2">
+          <div className="bg-red-600 text-white text-center py-2 text-sm sm:text-base">
             {errorMessage}
           </div>
         )}
 
-        <div className="p-6 grid md:grid-cols-2 gap-6 text-gray-700">
+        <div className="p-4 sm:p-6 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 text-gray-700">
           <div className="space-y-3">
-            <h3 className="text-lg font-semibold text-gray-800 mb-2">Personal Info</h3>
+            <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-2">Personal Info</h3>
             {editMode ? (
               <>
                 <input
@@ -197,7 +197,7 @@ export default function Profile() {
                   name="firstName"
                   value={formData.firstName || ''}
                   onChange={handleInputChange}
-                  className="w-full border rounded p-2"
+                  className="w-full border rounded p-2 text-sm sm:text-base"
                   placeholder="First Name"
                 />
                 <input
@@ -205,7 +205,7 @@ export default function Profile() {
                   name="lastName"
                   value={formData.lastName || ''}
                   onChange={handleInputChange}
-                  className="w-full border rounded p-2"
+                  className="w-full border rounded p-2 text-sm sm:text-base"
                   placeholder="Last Name"
                 />
                 <input
@@ -213,7 +213,7 @@ export default function Profile() {
                   name="email"
                   value={formData.email || ''}
                   onChange={handleInputChange}
-                  className="w-full border rounded p-2"
+                  className="w-full border rounded p-2 text-sm sm:text-base"
                   placeholder="Email"
                 />
                 <input
@@ -221,7 +221,7 @@ export default function Profile() {
                   name="phoneNumber"
                   value={formData.phoneNumber || ''}
                   onChange={handleInputChange}
-                  className="w-full border rounded p-2"
+                  className="w-full border rounded p-2 text-sm sm:text-base"
                   placeholder="Phone Number"
                 />
                 <input
@@ -229,7 +229,7 @@ export default function Profile() {
                   name="country"
                   value={formData.country || ''}
                   onChange={handleInputChange}
-                  className="w-full border rounded p-2"
+                  className="w-full border rounded p-2 text-sm sm:text-base"
                   placeholder="Country"
                 />
                 <input
@@ -237,7 +237,7 @@ export default function Profile() {
                   name="state"
                   value={formData.state || ''}
                   onChange={handleInputChange}
-                  className="w-full border rounded p-2"
+                  className="w-full border rounded p-2 text-sm sm:text-base"
                   placeholder="State"
                 />
                 <input
@@ -245,173 +245,136 @@ export default function Profile() {
                   name="city"
                   value={formData.city || ''}
                   onChange={handleInputChange}
-                  className="w-full border rounded p-2"
+                  className="w-full border rounded p-2 text-sm sm:text-base"
                   placeholder="City"
                 />
                 <select
                   name="gender"
                   value={formData.gender || ''}
                   onChange={handleInputChange}
-                  className="w-full border rounded p-2"
+                  className="w-full border rounded p-2 text-sm sm:text-base"
                 >
                   <option value="">Select Gender</option>
                   <option value="male">Male</option>
                   <option value="female">Female</option>
                   <option value="other">Other</option>
                 </select>
-                {/* Non-editable Role Field */}
-                <div className="flex items-center text-gray-600 pt-2">
-                  <GraduationCap size={16} className="mr-2" />
-                  Role: {student.role} (Cannot be changed)
-                </div>
               </>
             ) : (
-              <>
-                <div className="flex items-center">
-                  <User size={16} className="mr-2" /> Username: {student.username}
-                </div>
-                <div className="flex items-center">
-                  <GraduationCap size={16} className="mr-2" /> Role: {student.role}
-                </div>
-                <div className="flex items-center">
-                  <Mail size={16} className="mr-2" /> Email: {student.email}
-                </div>
-                <div className="flex items-center">
-                  <Phone size={16} className="mr-2" /> Phone: {student.phoneNumber}
-                </div>
-                <div className="flex items-center">
-                  <Globe size={16} className="mr-2" /> Country: {student.country}
-                </div>
-                <div className="flex items-center">
-                  <Venus size={16} className="mr-2" /> Gender: {student.gender}
-                </div>
-                <div className="flex items-center">
-                  <User size={16} className="mr-2" /> Location: {student.city}, {student.state}
-                </div>
-              </>
+              <div className="space-y-2">
+                <p className="flex items-center text-sm sm:text-base">
+                  <User className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-gray-500" />
+                  {student.firstName} {student.lastName}
+                </p>
+                <p className="flex items-center text-sm sm:text-base">
+                  <Mail className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-gray-500" />
+                  {student.email}
+                </p>
+                <p className="flex items-center text-sm sm:text-base">
+                  <Phone className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-gray-500" />
+                  {student.phoneNumber || 'Not provided'}
+                </p>
+                <p className="flex items-center text-sm sm:text-base">
+                  <Globe className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-gray-500" />
+                  {[student.city, student.state, student.country].filter(Boolean).join(', ') || 'Location not provided'}
+                </p>
+                <p className="flex items-center text-sm sm:text-base">
+                  <Venus className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-gray-500" />
+                  {student.gender || 'Not specified'}
+                </p>
+              </div>
             )}
           </div>
 
-          <div className="space-y-3">
-            <h3 className="text-lg font-semibold text-gray-800 mb-2">Course Stats</h3>
-            {student?.role === "instructor" ? (
-              // Instructor stats
-              <div className="flex gap-4">
-                <div className="flex-1 bg-gray-100 rounded-lg p-4 text-center">
-                  <Edit className="mx-auto text-blue-600 mb-1" size={28} />
-                  <p className="text-sm">Courses Created</p>
-                  <p className="text-xl font-bold">{instructorCourses.length}</p>
-                </div>
-                <div className="flex-1 bg-gray-100 rounded-lg p-4 text-center">
-                  <CheckCircle className="mx-auto text-green-600 mb-1" size={28} />
-                  <p className="text-sm">Published</p>
-                  <p className="text-xl font-bold">{instructorCourses.filter(c => c.isPublished).length}</p>
-                </div>
+          <div>
+            <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-4">Course Information</h3>
+            <div className="space-y-4">
+              <div className="flex items-center gap-2 text-sm sm:text-base">
+                <GraduationCap className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500" />
+                <span>Role: {student.role}</span>
               </div>
-            ) : (
-              // Student stats
-              <div className="flex gap-4">
-                <div className="flex-1 bg-gray-100 rounded-lg p-4 text-center">
-                  <GraduationCap className="mx-auto text-blue-600 mb-1" size={28} />
-                  <p className="text-sm">Enrolled</p>
-                  <p className="text-xl font-bold">{courses.length}</p>
+              
+              {student.role === "student" && (
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-sm sm:text-base">
+                    <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500" />
+                    <span>Enrolled Courses: {courses.length}</span>
+                  </div>
+                  {courses.length > 0 && (
+                    <div className="mt-4 space-y-2">
+                      {courses.map((course) => (
+                        <div key={course._id} className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
+                          <span className="text-sm sm:text-base font-medium">{course.courseTitle}</span>
+                          <span className="text-xs sm:text-sm text-gray-500">
+                            {new Date(course.purchasedOn).toLocaleDateString()}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
-                <div className="flex-1 bg-gray-100 rounded-lg p-4 text-center">
-                  <CheckCircle className="mx-auto text-green-600 mb-1" size={28} />
-                  <p className="text-sm">Completed</p>
-                  <p className="text-xl font-bold">{courses.filter(c => c.progress === 100).length}</p>
+              )}
+
+              {student.role === "instructor" && (
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-sm sm:text-base">
+                    <Edit className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500" />
+                    <span>Created Courses: {instructorCourses.length}</span>
+                  </div>
+                  {instructorCourses.length > 0 && (
+                    <div className="mt-4 space-y-2">
+                      {instructorCourses.map((course) => (
+                        <div key={course._id} className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
+                          <span className="text-sm sm:text-base font-medium">{course.courseTitle}</span>
+                          <span className="text-xs sm:text-sm text-gray-500">
+                            Students: {course.enrolledStudents?.length || 0}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
 
-        <div className="px-6 pt-4 pb-6">
-          {student?.role === "instructor" ? (
-            // Instructor courses section
-            <>
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">Your Courses</h3>
-              <div className="space-y-4">
-                {instructorCourses.length === 0 ? (
-                  <p className="text-sm text-gray-500">You haven't created any courses yet.</p>
-                ) : (
-                  instructorCourses.map((course) => (
-                    <div
-                      key={course._id}
-                      className="bg-gray-100 p-4 rounded-lg shadow-sm hover:shadow-md transition"
-                    >
-                      <div className="flex justify-between items-center">
-                        <h4 className="text-md font-semibold text-gray-900">{course.courseTitle}</h4>
-                        <span className={`px-2 py-1 text-xs rounded-full ${
-                          course.isPublished 
-                            ? 'bg-green-100 text-green-800' 
-                            : 'bg-yellow-100 text-yellow-800'
-                        }`}>
-                          {course.isPublished ? 'Published' : 'Unpublished'}
-                        </span>
-                      </div>
-                      <p className="text-sm text-gray-600 mt-1">{course.subTitle || 'No subtitle'}</p>
-                      <div className="flex items-center justify-between mt-2 text-xs text-gray-500">
-                        <span>Category: {course.category}</span>
-                        <span>Students: {course.enrolledStudents?.length || 0}</span>
-                      </div>
-                    </div>
-                  ))
-                )}
-              </div>
-            </>
-          ) : (
-            // Student courses section
-            <>
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">Enrolled Courses</h3>
-              <div className="space-y-4">
-                {courses.length === 0 ? (
-                  <p className="text-sm text-gray-500">No courses enrolled yet.</p>
-                ) : (
-                  courses.map((course) => (
-                    <div
-                      key={course._id}
-                      className="bg-gray-100 p-4 rounded-lg shadow-sm hover:shadow-md transition"
-                    >
-                      <h4 className="text-md font-semibold text-gray-900">{course.courseId?.courseTitle}</h4>
-                      <p className="text-sm text-gray-600">{course.courseId?.subTitle || course.courseId?.description}</p>
-                      <div className="w-full bg-white h-2 mt-2 rounded-full">
-                        <div
-                          className="bg-blue-600 h-2 rounded-full"
-                          style={{ width: `${course.progress || 0}%` }}
-                        />
-                      </div>
-                      <p className="text-sm text-right text-gray-500 mt-1">{course.progress || 0}% complete</p>
-                    </div>
-                  ))
-                )}
-              </div>
-            </>
-          )}
-        </div>
-
-        <div className="border-t px-6 py-4 flex justify-end">
+        <div className="px-4 sm:px-6 py-4 border-t flex justify-end gap-3">
           {editMode ? (
             <>
               <button
-                onClick={saveChanges}
-                className="bg-blue-600 text-white rounded-lg py-2 px-4 mr-2"
+                onClick={() => {
+                  setEditMode(false);
+                  setFormData(student);
+                  setPreviewImage(student.photoUrl);
+                }}
+                className="px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors flex items-center gap-2"
                 disabled={isUpdating}
               >
-                {isUpdating ? "Saving..." : "Save Changes"}
+                <X size={16} />
+                Cancel
               </button>
               <button
-                onClick={() => setEditMode(false)}
-                className="bg-gray-300 text-black rounded-lg py-2 px-4"
+                onClick={saveChanges}
+                className="px-4 py-2 text-sm sm:text-base bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                disabled={isUpdating}
               >
-                Cancel
+                {isUpdating ? (
+                  "Saving..."
+                ) : (
+                  <>
+                    <Save size={16} />
+                    Save Changes
+                  </>
+                )}
               </button>
             </>
           ) : (
             <button
               onClick={() => setEditMode(true)}
-              className="bg-blue-600 text-white rounded-lg py-2 px-4"
+              className="px-4 py-2 text-sm sm:text-base bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
             >
+              <Pencil size={16} />
               Edit Profile
             </button>
           )}

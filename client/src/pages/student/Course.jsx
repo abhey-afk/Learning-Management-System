@@ -70,35 +70,36 @@ const Courses = () => {
     );
 
   return (
-    <section className="py-16 bg-gray-50 px-4 md:px-10">
-      <div className="max-w-6xl mx-auto text-center mb-12">
-        <h2 className="text-4xl font-bold mb-4 text-blue-700">Explore Our Courses</h2>
-        <p className="text-gray-600 text-lg">
+    <section className="py-8 sm:py-12 md:py-16 bg-gray-50 px-4 md:px-10">
+      <div className="max-w-6xl mx-auto text-center mb-8 sm:mb-12">
+        <h2 className="text-3xl sm:text-4xl font-bold mb-3 sm:mb-4 text-blue-700">Explore Our Courses</h2>
+        <p className="text-gray-600 text-base sm:text-lg px-4">
           Find the course that suits your passion, skill level, and career goals.
         </p>
       </div>
 
-      <div className="max-w-6xl mx-auto mb-10">
+      <div className="max-w-6xl mx-auto mb-6 sm:mb-10">
         <div className="flex justify-center">
-          <div className="flex items-center gap-2">
+          <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full sm:w-auto">
             <button
               onClick={() => setFiltersOpen(!filtersOpen)}
-              className="flex items-center gap-2 px-4 py-3 bg-white border border-gray-300 rounded-lg md:hidden justify-center"
+              className="flex items-center gap-2 px-4 py-3 bg-white border border-gray-300 rounded-lg sm:hidden w-full justify-center"
             >
               <Filter className="h-5 w-5" />
               Filters
               <ChevronDown className={`h-4 w-4 transition-transform ${filtersOpen ? "rotate-180" : ""}`} />
             </button>
 
-            <div className={`${filtersOpen ? "flex" : "hidden"} md:flex flex-wrap gap-2`}>
+            <div className={`${filtersOpen ? "flex" : "hidden"} sm:flex flex-wrap gap-2 w-full sm:w-auto justify-center`}>
               {difficultyOptions.map((level) => (
                 <button
                   key={level}
                   onClick={() => setSelectedDifficulty(level)}
-                  className={`px-4 py-2 rounded-lg border transition-colors ${selectedDifficulty === level
+                  className={`px-4 py-2 rounded-lg border transition-colors w-full sm:w-auto ${
+                    selectedDifficulty === level
                       ? "bg-blue-600 text-white border-blue-600"
                       : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
-                    }`}
+                  }`}
                 >
                   {level}
                 </button>
@@ -109,14 +110,14 @@ const Courses = () => {
       </div>
 
       {!isLoading && filteredCourses?.length === 0 && (
-        <div className="text-center py-10">
-          <BookOpen className="h-16 w-16 mx-auto text-gray-400 mb-4" />
-          <h3 className="text-xl font-medium text-gray-700 mb-2">No courses found</h3>
-          <p className="text-gray-500">Try adjusting your filters to find what you're looking for</p>
+        <div className="text-center py-8 sm:py-10">
+          <BookOpen className="h-12 sm:h-16 w-12 sm:w-16 mx-auto text-gray-400 mb-4" />
+          <h3 className="text-lg sm:text-xl font-medium text-gray-700 mb-2">No courses found</h3>
+          <p className="text-gray-500 text-sm sm:text-base">Try adjusting your filters to find what you're looking for</p>
         </div>
       )}
 
-      <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid gap-4 sm:gap-6 lg:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {isLoading
           ? Array(4)
             .fill()
@@ -130,41 +131,41 @@ const Courses = () => {
                 <img
                   src={course.courseThumbnail}
                   alt={course.courseTitle}
-                  className="w-full h-48 object-cover"
+                  className="w-full h-40 sm:h-48 object-cover"
                 />
                 <div className="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-xs flex items-center gap-1">
-                  <Video className="w-4 h-4" />
+                  <Video className="w-3 h-3 sm:w-4 sm:h-4" />
                   <span>{course.lectures?.length || 0}</span>
                 </div>
               </div>
 
-              <div className="flex flex-col flex-grow p-5">
+              <div className="flex flex-col flex-grow p-4 sm:p-5">
                 <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-xl font-semibold text-gray-800">{course.courseTitle}</h3>
+                  <h3 className="text-lg sm:text-xl font-semibold text-gray-800 line-clamp-2">{course.courseTitle}</h3>
                 </div>
-                <p className="text-gray-600 text-sm mb-2 font-medium">{course.subTitle}</p>
+                <p className="text-gray-600 text-xs sm:text-sm mb-2 font-medium line-clamp-2">{course.subTitle}</p>
 
                 <div
-                  className="prose prose-sm max-w-none text-gray-600 mb-4"
+                  className="prose prose-sm max-w-none text-gray-600 mb-4 line-clamp-3 text-xs sm:text-sm"
                   dangerouslySetInnerHTML={{ __html: course.description }}
                 />
 
-                <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
-                  <User className="w-4 h-4 flex-shrink-0" />
+                <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-500 mb-2">
+                  <User className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
                   <span className="truncate">
                     {course.creator?.photoUrl ? (
                       <img
                         src={course.creator.photoUrl}
                         alt="Instructor"
-                        className="w-6 h-6 rounded-full inline-block mr-2"
+                        className="w-5 h-5 sm:w-6 sm:h-6 rounded-full inline-block mr-2"
                       />
                     ) : null}
                     {course.creator?.name || "Unknown Instructor"}
                   </span>
                 </div>
 
-                <div className="flex items-center gap-2 text-sm text-gray-500 mb-4">
-                  <Clock className="w-4 h-4" />
+                <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-500 mb-4">
+                  <Clock className="w-3 h-3 sm:w-4 sm:h-4" />
                   <span>
                     {new Date(course.createdAt).toLocaleDateString("en-US", {
                       year: "numeric",
@@ -176,9 +177,9 @@ const Courses = () => {
 
                 <div className="flex justify-between items-center mt-auto">
                   <div className="flex items-center gap-3">
-                    <span className="text-lg font-bold text-green-600">₹{course.coursePrice}</span>
-                    <div className="flex items-center gap-1 text-sm text-gray-500">
-                      <Users className="w-4 h-4" />
+                    <span className="text-base sm:text-lg font-bold text-green-600">₹{course.coursePrice}</span>
+                    <div className="flex items-center gap-1 text-xs sm:text-sm text-gray-500">
+                      <Users className="w-3 h-3 sm:w-4 sm:h-4" />
                       <span>{course.enrolledStudents?.length || 0}</span>
                     </div>
                   </div>
@@ -186,7 +187,7 @@ const Courses = () => {
                 </div>
                 <Link
                   to={`/courses-detail/${course._id}`}
-                  className="mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors w-full text-center"
+                  className="mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors w-full text-center text-sm sm:text-base"
                 >
                   View Course
                 </Link>
